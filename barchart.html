@@ -11,18 +11,29 @@
         background-color: blue;
         border-bottom: 3px solid yellow;
       }
+
+      .wide_bar{
+        height: 15px;
+        background-color: red;
+        border-bottom: 3px solid black;
+      }
+
     </style>
 
     <script>
-    var data = d3.range(50);  // d3.range(n) produces an array of integers from 0 to n
-    d3.select('body').selectAll('.bar').data(data)
-      .enter()  // produce a new selector of all the data/elements pairs that have no element in the selector returned from data().
-      .append('div')  // create new DOM elements to match data items
-      .style('width', function (
-        d /*data item (or datum) for the current data/element pair*/
-        ,i /*current index within the selector*/
-        ) { return d + '%' })
-      .attr('class', 'bar');  // need to specify the CSS class so that CSS rule for each .bar can take effect
+    
+    d3.select('body').selectAll('.bar').data([18, 4, 7])
+      .enter() 
+      .append('div')
+      .attr('class', 'bar')
+      .style('width', function (d) { return d + '%' });
+
+      d3.select('body').selectAll('.bar').data([4, 4, 4, 19, 23, 47])
+      .enter() // only add data/element pairs for no-existent DOM elements, with elements as empty
+      .append('div')
+      .attr('class', 'wide_bar')
+      .style('width', function (d) { return d + '%' });
+
     </script>
   </body>
 </html>
