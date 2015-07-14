@@ -22,7 +22,7 @@
 
     <script>
     
-    d3.select('body').selectAll('.bar').data([18, 4, 7])
+    d3.select('body').selectAll('.bar').data([18, 4, 7, 19])
       .enter() 
       .append('div')
       .attr('class', 'bar')
@@ -30,10 +30,13 @@
 
       d3.select('body').selectAll('.bar').data([4, 4, 4, 19, 23, 47])
       .enter() // only add data/element pairs for no-existent DOM elements, with elements as empty
+      //.enter() returns a new selector of data/element pairs without elements.
       .append('div')
       .attr('class', 'wide_bar')
       .style('width', function (d) { return d + '%' });
 
+      d3.select('body').selectAll('.bar').data([8, 99]).exit() // exit() will create a new selector to pair with elements wihtout data
+      .remove();
     </script>
   </body>
 </html>
