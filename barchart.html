@@ -13,16 +13,15 @@
       }
     </style>
 
-    <div class="bar"></div>
-
     <script>
-    var data = [10, 10, 10, 10, 10];
+    var data = d3.range(50);  // d3.range(n) produces an array of integers from 0 to n
     d3.select('body').selectAll('.bar').data(data)
-      .enter().append('div')  // create new DOM elements to match data items
+      .enter()  // produce a new selector of all the data/elements pairs that have no element in the selector returned from data().
+      .append('div')  // create new DOM elements to match data items
       .style('width', function (
         d /*data item (or datum) for the current data/element pair*/
         ,i /*current index within the selector*/
-        ) { return d * (i+1) + '%' })
+        ) { return d + '%' })
       .attr('class', 'bar');  // need to specify the CSS class so that CSS rule for each .bar can take effect
     </script>
   </body>
