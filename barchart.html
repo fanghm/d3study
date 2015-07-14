@@ -9,20 +9,21 @@
       .bar{
         height: 10px;
         background-color: blue;
-        border-bottom: 1px solid white;
+        border-bottom: 3px solid yellow;
       }
     </style>
 
     <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-    
+
     <script>
-    var data = [10, 10, 10];
-    d3.selectAll('.bar').data(data)
-      .style('width', function(d, i){
-        return d * (i+1) + '%'
-      });
+    var data = [10, 10, 10, 10, 10];
+    d3.select('body').selectAll('.bar').data(data)
+      .enter().append('div')  // create new DOM elements to match data items
+      .style('width', function (
+        d /*data item (or datum) for the current data/element pair*/
+        ,i /*current index within the selector*/
+        ) { return d * (i+1) + '%' })
+      .attr('class', 'bar');  // need to specify the CSS class so that CSS rule for each .bar can take effect
     </script>
   </body>
 </html>
