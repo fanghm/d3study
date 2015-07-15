@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Donut</title>
+    <script src="./d3.min.js" charset="utf-8"></script>
+    <style>
+      body{ margin: 0; }
+      path { stroke: white; stroke-width: 2px; fill: steelblue;}
+      .plot{ fill: none; stroke: #aec7e8; stroke-width: 2;}
+      circle{ fill: steelblue; stroke: white;}
+
+    </style>
+  </head>
+  <body>
+    <script>
+      // --- draw donut ---
+
+      // the arc generator
+      var arc = d3.svg.arc()
+        .innerRadius(100)
+        .outerRadius(150);
+
+      var data = [11, 12, 23, 4, 50]; // not necessarily added to 100
+
+      var color = d3.scale.category10();
+
+      var pie = d3.layout.pie();
+      var arcData = pie(data); // will be sorted and convert into percentage?
+
+      d3.select('body').append('svg').attr('width', 400).attr('height', 500)
+        .append('g').attr('transform', 'translate(200, 175)')
+          .selectAll('path').data(arcData).enter()
+            .append('path').attr('d', arc).style('fill', function(d, i){
+              return color(i);
+            });
+
+      // --- draw area ---
+      var svg = d3.select('svg')
+
+      // construct and configure the are generator
+      var area = d3.svg.area()
+        .y0(450) // set the lower y bound of the area shape
+        .y1(function(d){ return d.y })
+        .x(function(d, i){ return d.x })
+
+      // generator some random data
+      var data = d3.range(100).map(function(){ return Math.random() * 30 + 0 })
+        .map(function(d, i){ return { x: i * 10, y: d+350 }})
+
+      // draw the area shape under the line of the plot
+      svg.append('path').datum(data).attr('d', area)
+
+      // give the area shape a border along its top edge
+      var line = d3.svg.line()
+        .x(function(d){ return d.x})
+        .y(function(d){ return d.y })
+      svg.append('path').datum(data).attr('d', line).attr('class', 'plot')
+
+      // the circles at all the points
+      svg.selectAll('circle').data(data).enter().append('circle')
+        .attr('cx', function(d){ return d.x })
+        .attr('cy', function(d){ return d.y })
+        .attr('r', 3)
+    </script>
+  </body>
+</html>
