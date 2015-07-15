@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+  <body>
+    <script src="./d3.min.js" charset="utf-8"></script>
+    <script>
+      var rainbow = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+      var RADIUS = 150, WIDTH = 10;
+
+      // arc generator
+      var arc = d3.svg.arc()
+        .innerRadius(RADIUS)
+        
+        // accessors can be passed functions which will be called for each element of the selectors data
+        // the outer radius of the rainbow is set from the index in the rainbow array
+        .outerRadius(function(d, i){ return (rainbow.length - i) * WIDTH + RADIUS})
+
+        .startAngle(-Math.PI / 2).endAngle(Math.PI / 2);
+
+      d3.select('body').append('svg').attr('width', 500).attr('height', 500)
+          .selectAll('path').data(rainbow).enter().append('path') // data() vs. datum() ?
+          .attr({ 
+            d: arc, // generator
+            transform: 'translate(250, 250)',  // offset
+            fill: function(d){ return d }      // ?
+          })
+    </script>
+  </body>
+</html>
