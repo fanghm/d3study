@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body{ margin: 0; }
+    circle { fill: orange; stroke: #333; }
+    path { fill: none; stroke: #333; stroke-width: 4; }
+  </style>
+</head>
+<body>
+  <script src="./d3.min.js"></script>
+  <script>
+
+    var svg = d3.select('body').append('svg').attr('width', 1500).attr('height', 800);
+
+    // our radial line generator
+    var lineRadial = d3.svg.line.radial();
+
+    var n = 1000, max_r = 250, rotations = 10;
+    var data = d3.range(n).map(function(d){
+      var t = d / (n - 1);
+      return [ t * max_r, t * Math.PI * rotations * 2 ];
+    });
+
+    var link = svg.append('path').datum(data).attr('d', lineRadial)
+      .attr('transform', 'translate(300,300)');
+
+  </script>
+</body>

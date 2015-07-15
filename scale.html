@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script src="./d3.min.js" charset="utf-8"></script>
+  <style> rect { stroke: red; stroke-width: 1; fill: black; } </style>
+</head>
+<body>
+  <script>
+    // viewers for each episode
+    var data = [ 10870000, 9550000, 10510000,
+      9270000, 10370000, 9210000,
+      10430000, 10480000, 12260000,
+      11050000, 11010000, 11300000,
+      11460000, 10840000, 10990000,
+      12420000 ];
+
+    // scaling data
+    var height = 200;
+
+    // the episode with the most views
+    var max = d3.max(data);
+    
+    // Our scale factor
+    var scale = height / max;
+    var scaled_data =
+      data.map(function(d){
+        return d * scale;
+      });
+
+    var svg = d3.select('body')
+      .append('svg').attr('width', 1500).attr('height', 800)
+      .selectAll('rect')
+      .data(scaled_data)
+      // add all the <rect> tags
+      .enter().append('rect')
+      .attr({
+        width: 50,
+        height: function(d){ return d },
+        x: function(d, i){ return i * 50 },
+        // y pixels count down
+        y: function(d){ return height - d }
+      });
+  </script>
+</body>
+</html>
